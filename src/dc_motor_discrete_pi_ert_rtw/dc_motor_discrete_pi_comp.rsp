@@ -1,0 +1,7 @@
+-ID:/Personal_Projects/Control_Systems/dc_motor_mbd_control/scripts
+-ID:/Personal_Projects/Control_Systems/dc_motor_mbd_control/scripts/dc_motor_discrete_pi_ert_rtw
+-I"D:/MATLAB Software/extern/include"
+-I"D:/MATLAB Software/simulink/include"
+-I"D:/MATLAB Software/rtw/c/src"
+-I"D:/MATLAB Software/rtw/c/src/ext_mode/common"
+-I"D:/MATLAB Software/rtw/c/ert"
