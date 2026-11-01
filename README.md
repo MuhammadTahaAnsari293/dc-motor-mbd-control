@@ -45,16 +45,16 @@ where:
 
 | Symbol | Description | Illustrative value |
 |---|---|---:|
-| \(R\) | Armature resistance | 1 Ω |
-| \(L\) | Armature inductance | 0.5 H |
-| \(K_t\) | Torque constant | 0.01 N·m/A |
-| \(K_e\) | Back-EMF constant | 0.01 V·s/rad |
-| \(J\) | Rotor inertia | 0.01 kg·m² |
-| \(b\) | Viscous friction coefficient | 0.1 N·m·s/rad |
+| $$(R)$$ | Armature resistance | 1 Ω |
+| $$(L)$$ | Armature inductance | 0.5 H |
+| $$(K_t)$$ | Torque constant | 0.01 N·m/A |
+| $$(K_e)$$ | Back-EMF constant | 0.01 V·s/rad |
+| $$(J)$$ | Rotor inertia | 0.01 kg·m² |
+| $$(b)$$ | Viscous friction coefficient | 0.1 N·m·s/rad |
 
-With state vector \(x = [\omega\; i]^T\) and inputs \(u = [V\; T_L]^T\), the state-space model is:
+With state vector $x = [\omega\; i]^T$ and inputs $u = [V\; T_L]^T$, the state-space model is:
 
-\[
+$$
 \dot{x} =
 \begin{bmatrix}
 -b/J & K_t/J \\
@@ -64,34 +64,34 @@ With state vector \(x = [\omega\; i]^T\) and inputs \(u = [V\; T_L]^T\), the sta
 0 & -1/J \\
 1/L & 0
 \end{bmatrix}u
-\]
+$$
 
-\[
+$$
 y = \begin{bmatrix}1 & 0\end{bmatrix}x
-\]
+$$
 
 The voltage-to-speed transfer function is:
 
-\[
+$$
 G(s) = \frac{\omega(s)}{V(s)} =
 \frac{0.01}{0.005s^2 + 0.06s + 0.1001}
-\]
+$$
 
 ## PI controller
 
 A PI controller is used to reduce tracking error and reject load disturbances:
 
-\[
+$$
 C(s) = K_p + \frac{K_i}{s}
-\]
+$$
 
 The selected gains are:
 
 | Parameter | Value |
 |---|---:|
-| Proportional gain, \(K_p\) | 16.579207 |
-| Integral gain, \(K_i\) | 35 |
-| Discrete sample period, \(T_s\) | 0.01 s (100 Hz) |
+| Proportional gain, $$(K_p)$$ | 16.579207 |
+| Integral gain, $$(K_i)$$ | 35 |
+| Discrete sample period, $$(T_s)$$ | 0.01 s (100 Hz) |
 
 The initial PI design was obtained using MATLAB's `pidtune`, followed by comparison of integral gains and selection of the final values.
 
@@ -99,17 +99,17 @@ The initial PI design was obtained using MATLAB's `pidtune`, followed by compari
 
 The generated controller uses an accumulated integral contribution:
 
-\[
-e[k] = \omega_{ref}[k] - \omega_{measured}[k]
-\]
+$$
+e[k] = \omega_{\mathrm{ref}}[k] - \omega_{\mathrm{measured}}[k]
+$$
 
-\[
-V_{cmd}[k] = K_p e[k] + I[k]
-\]
+$$
+V_{\mathrm{cmd}}[k] = K_p e[k] + I[k]
+$$
 
-\[
+$$
 I[k+1] = I[k] + K_i T_s e[k]
-\]
+$$
 
 The following excerpt is representative of the actual controller-only generated C++:
 
